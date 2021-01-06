@@ -274,10 +274,10 @@ object DemoSpeech : SpeechModuleFactory() {
             handleWakeup(hostService, wakeUp, service)
         }
 
-        val iflytekWakeUpDetector = IflytekWakeUpDetector(WeiNaRecorder(false), "5fe4288e")
-        iflytekWakeUpDetector.registerListener { wakeUp ->
-            handleWakeup(hostService, wakeUp, service)
-        }
+//        val iflytekWakeUpDetector = IflytekWakeUpDetector(WeiNaRecorder(false), "5fe4288e")
+//        iflytekWakeUpDetector.registerListener { wakeUp ->
+//            handleWakeup(hostService, wakeUp, service)
+//        }
 
         //init DingDang
         DingDangManager.load(appContext) { success ->
