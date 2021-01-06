@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<service name="demo_service">
+  <call path="/demo-service/demo-path" />
+</service>
