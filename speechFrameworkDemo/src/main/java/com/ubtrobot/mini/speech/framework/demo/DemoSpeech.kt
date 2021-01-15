@@ -274,10 +274,10 @@ object DemoSpeech : SpeechModuleFactory() {
             handleWakeup(hostService, wakeUp, service)
         }
 
-//        val iflytekWakeUpDetector = IflytekWakeUpDetector(WeiNaRecorder(false), "5fe4288e")
-//        iflytekWakeUpDetector.registerListener { wakeUp ->
-//            handleWakeup(hostService, wakeUp, service)
-//        }
+        val iflytekWakeUpDetector = IflytekWakeUpDetector.Builder(WeiNaRecorder(false), "5d7f6355").build()
+        iflytekWakeUpDetector.registerListener { wakeUp ->
+            handleWakeup(hostService, wakeUp, service)
+        }
 
         //init DingDang
         DingDangManager.load(appContext) { success ->
@@ -346,33 +346,33 @@ object DemoSpeech : SpeechModuleFactory() {
         hostService.publishCarefully(SpeechConstants.ACTION_WAKE_UP,
                 ParcelableParam.create(wakeUp))
 
-        val o: RecognitionOption = RecognitionOption.Builder(
-                RecognitionOption.MODE_SINGLE).setUnderstandingOption(
-                Builder().setSessionId(
-                        UUID.randomUUID().toString()).build()).build()
-        val callAdapter = ParcelableSessionCallAdapter2(
-                service, "speech",
-                service.openCompetitionSession().addCompeting {
-                    listOf(CompetingItem("speech", "recognizer"))
-                })
-        val promise: ProgressivePromise<RecognitionResult, RecognitionException, RecognitionProgress> = callAdapter.callStickily(
-                "/speech/recognize", o,
-                RecognitionResult::class.java,
-                RecognitionProgress::class.java
-        ) { e ->
-            RecognitionException(
-                    CallExceptionTranslator2.translate(e), e.subCode,
-                    e.message)
-        }
-        promise.done {
-            //处理成功结果
-        }
-        promise.fail {
-            //处理失败结果
-        }
-        promise.progress {
-            //处理中间结果
-        }
+//        val o: RecognitionOption = RecognitionOption.Builder(
+//                RecognitionOption.MODE_SINGLE).setUnderstandingOption(
+//                Builder().setSessionId(
+//                        UUID.randomUUID().toString()).build()).build()
+//        val callAdapter = ParcelableSessionCallAdapter2(
+//                service, "speech",
+//                service.openCompetitionSession().addCompeting {
+//                    listOf(CompetingItem("speech", "recognizer"))
+//                })
+//        val promise: ProgressivePromise<RecognitionResult, RecognitionException, RecognitionProgress> = callAdapter.callStickily(
+//                "/speech/recognize", o,
+//                RecognitionResult::class.java,
+//                RecognitionProgress::class.java
+//        ) { e ->
+//            RecognitionException(
+//                    CallExceptionTranslator2.translate(e), e.subCode,
+//                    e.message)
+//        }
+//        promise.done {
+//            //处理成功结果
+//        }
+//        promise.fail {
+//            //处理失败结果
+//        }
+//        promise.progress {
+//            //处理中间结果
+//        }
 
         //play a sound effect
         WakeupAudioPlayer.get(appContext).play()
