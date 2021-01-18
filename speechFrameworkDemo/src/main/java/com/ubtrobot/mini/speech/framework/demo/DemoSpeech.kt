@@ -11,10 +11,6 @@ import com.ubtechinc.mini.weinalib.WeiNaMicApi
 import com.ubtechinc.mini.weinalib.WeiNaRecorder
 import com.ubtechinc.mini.weinalib.wakeup.WeiNaWakeUpDetector
 import com.ubtrobot.action.ActionApi
-import com.ubtrobot.async.ProgressivePromise
-import com.ubtrobot.exception.CallExceptionTranslator2
-import com.ubtrobot.master.adapter.ParcelableSessionCallAdapter2
-import com.ubtrobot.master.competition.CompetingItem
 import com.ubtrobot.master.param.ProtoParam
 import com.ubtrobot.master.service.MasterSystemService
 import com.ubtrobot.master.transport.message.parcel.ParcelableParam
@@ -35,7 +31,6 @@ import com.ubtrobot.speech.AbstractSynthesizer
 import com.ubtrobot.speech.AbstractUnderstander
 import com.ubtrobot.speech.CompositeSpeechService
 import com.ubtrobot.speech.RecognitionException
-import com.ubtrobot.speech.RecognitionOption
 import com.ubtrobot.speech.RecognitionProgress
 import com.ubtrobot.speech.RecognitionResult
 import com.ubtrobot.speech.RecognizerListener
@@ -45,7 +40,6 @@ import com.ubtrobot.speech.SynthesisProgress
 import com.ubtrobot.speech.SynthesizerListener
 import com.ubtrobot.speech.UnderstanderListener
 import com.ubtrobot.speech.UnderstandingException
-import com.ubtrobot.speech.UnderstandingOption.Builder
 import com.ubtrobot.speech.UnderstandingResult
 import com.ubtrobot.speech.WakeUp
 import com.ubtrobot.speech.parcelable.ASRState
@@ -55,7 +49,6 @@ import com.ubtrobot.speech.parcelable.MicrophoneWakeupAngle
 import com.ubtrobot.speech.parcelable.TTsState
 import com.ubtrobot.speech.protos.Speech.WakeupParam
 import com.ubtrobot.ulog.FwLoggerFactory2
-import java.util.UUID
 
 /**
  * <p>Created 06/03. </p>
@@ -274,7 +267,8 @@ object DemoSpeech : SpeechModuleFactory() {
             handleWakeup(hostService, wakeUp, service)
         }
 
-        val iflytekWakeUpDetector = IflytekWakeUpDetector.Builder(WeiNaRecorder(false), "5d7f6355").build()
+        val iflytekWakeUpDetector = IflytekWakeUpDetector.Builder(WeiNaRecorder(false),
+                Utils.getContext().getString(R.string.app_id)).build()
         iflytekWakeUpDetector.registerListener { wakeUp ->
             handleWakeup(hostService, wakeUp, service)
         }
